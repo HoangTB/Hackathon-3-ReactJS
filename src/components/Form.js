@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Form (props){
 const [content, setContent] = useState('');
-
+const dataEdit = props.contentEdit;
 const handlChanged = (e) => {
   let valueContent = e.target.value;
   setContent(valueContent);
 };
-const handelAdded = (e) => {
+const handelAdded = () => {
     props.onAdd(content);
     setContent('');
  }
+
+ useEffect(() => {
+  if (dataEdit) {
+    setContent(dataEdit);
+  }
+}, [dataEdit]);
 
 return(
     <div className="">

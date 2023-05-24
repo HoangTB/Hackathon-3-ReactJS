@@ -18,7 +18,8 @@ function App() {
 
   const handleEdit = (product,index) =>{
     setContentedit(product.content);
-    console.log(contentEdit);
+    // console.log(contentEdit);
+
     }
 
 
@@ -26,7 +27,7 @@ function App() {
     <div>
       <Nav/>
       <div className="container my-3">
-         <Form onAdd ={onAdd}/> 
+         <Form onAdd ={onAdd} contentEdit = {contentEdit}/> 
         <h3>Show to me</h3>
         <hr />
         <Listproduct contentList = {contentList} onDelete = {handleDelete} onEdit={handleEdit}/>
