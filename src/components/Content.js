@@ -1,7 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Content(props) {
   const datas = props.onData;
+  const [maxpoint, setMaxpoint] = useState(0);
+
+
+  useEffect(() => {
+    // Tìm giá trị điểm số lớn nhất
+    const maxPoint = Math.max(...datas.map((data) => data.point));
+    // Cập nhật lại datas với giá trị điểm số lớn nhất
+    const updatedDatas = datas.map((data) => ({
+      ...data,
+      isMaxPoint: data.point === maxPoint,
+    }));
+    props.updateGiamTang(updatedDatas);
+  }, [datas, props]);
+
   const handleDelete = (index) => {
     props.onDelete(index);
   }
@@ -19,18 +33,20 @@ function Content(props) {
     props.updateGiamTang(updateGiamTang);
   };
 
+
+
   return (
     <div className='content-h2'>
       <table cellPadding={20} style={{ width: "100%" }}>
         <tbody>
           {
             datas.map((data, index) => {
-
+              const crownColorClass = data.isMaxPoint ? "crown" : "gray-1";
               return (
                 <div className='container'>
                   <tr key={index}>
                     <td style={{ width: "10%" }}><button className="btn btn-light" onClick={() => handleDelete(index)}>X</button></td>
-                    <td style={{ width: "10%" }}><i className="fa-solid fa-crown" style={{ color: "red" }}></i></td>
+                    <td style={{ width: "10%" }}><i className={`fa-solid fa-crown ${crownColorClass}`}></i></td>
                     <td style={{ width: "70%" }}>{data.name}</td>
                     <td className='d-flex justify-content-sm-around align-items-center' style={{ width: "150px" }}><button onClick={() => onGiam(index)} className="btn">-</button> <input value={data.point} style={{ width: "30px", textAlign: "center", border: "none", }} /> <button onClick={() => onTang(index)} className="btn">+</button> </td>
                   </tr>

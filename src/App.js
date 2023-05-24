@@ -7,6 +7,8 @@ import { useState } from 'react';
 
 function App() {
   const [product, setProduct] = useState([]);
+
+
   const hanldeSubmit = (name) => {
     if (name === "") {
       alert("Hãy nhập dữ liệu")
@@ -18,6 +20,7 @@ function App() {
   }
   let number = product.length;
 
+
   const hanldeDelete = (index) => {
       setProduct([...product.slice(0, index),...product.slice(index + 1)]);
     }
@@ -25,12 +28,20 @@ function App() {
   const updateGiamTang = (index) => {
     setProduct(index);
   }
-  
+
+  const calculateTotalPoints = () => {
+    let totalPoints = 0;
+    product.forEach((item) => {
+      totalPoints += item.point;
+    });
+    return totalPoints;
+  };
+
   
   return (
     <div className="container mt-5">
       <div className="card-body">
-        <Header number={number} />
+        <Header number={number} totalPoints={calculateTotalPoints()}/>
         <Content onData={product} onDelete={hanldeDelete} updateGiamTang ={updateGiamTang}/>
         <Footer onPush={hanldeSubmit} />
       </div>
